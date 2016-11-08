@@ -1,0 +1,21 @@
+#include "timeStamp.h"
+#include <sys/time.h>
+#include <inttypes.h>
+using namespace cm;
+
+TimeStamp::TimeStamp()
+	: microSecondsSinceEpoch_(0) {}
+
+TimeStamp::TimeStamp(int64_t microSecondsSinceEpoch)
+	: microSecondsSinceEpoch_(microSecondsSinceEpoch) {}
+
+TimeStamp TimeStamp::now() {
+	struct timeval tv;
+	gettimeofday(&tv, NULL);
+	int64_t seconds = tv.tv_sec;
+	return TimeStamp(seconds*kMicroSencondPerSecond+tv.tv_usec);
+}
+
+TimeStamp TimeStamp::invalid() {
+	return TimeStamp();
+}

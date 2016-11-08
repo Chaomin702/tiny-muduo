@@ -59,6 +59,15 @@
     <ClInclude Include="dbg.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="channel.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="epoller.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="timeStamp.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="thread.cpp">
@@ -71,6 +80,15 @@
       <Filter>Source files</Filter>
     </ClCompile>
     <ClCompile Include="test.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="epoller.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="channel.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="timeStamp.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>
