@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source files">
+      <UniqueIdentifier>{43fcd9ec-5294-419b-94fa-8bf82a15ab00}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header files">
+      <UniqueIdentifier>{5e4be27e-5478-4541-b7f5-00a085fb5cce}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource files">
+      <UniqueIdentifier>{b68d7ea0-78f4-4555-8089-8ffcb2cc13f2}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Make files">
+      <UniqueIdentifier>{6a946ca7-533a-46b1-a990-dfe18ae02096}</UniqueIdentifier>
+      <Extensions>*.mak</Extensions>
+    </Filter>
+    <Filter Include="VisualGDB settings">
+      <UniqueIdentifier>{26e89def-e205-4e14-a000-0d147b5e6da5}</UniqueIdentifier>
+      <Extensions>*.vgdbsettings</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Makefile" />
+    <None Include="debug.mak">
+      <Filter>Make files</Filter>
+    </None>
+    <None Include="tiny_muduo-Debug.vgdbsettings">
+      <Filter>VisualGDB settings</Filter>
+    </None>
+    <None Include="release.mak">
+      <Filter>Make files</Filter>
+    </None>
+    <None Include="tiny_muduo-Release.vgdbsettings">
+      <Filter>VisualGDB settings</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="condition.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="mutexLock.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="nonCopyable.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="thread.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="threadPoll.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="eventLoop.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="dbg.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="thread.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="threadpoll.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="eventLoop.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="test.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
