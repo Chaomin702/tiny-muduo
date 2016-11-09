@@ -1,8 +1,4 @@
-﻿  VisualGDB: Sending 2 updated source files to build machine...
+﻿  VisualGDB: Sending 1 updated source file to build machine...
   VisualGDB: Run "make CONFIG=Debug" in directory "/tmp/VisualGDB/d/server-programming/tiny_muduo/tiny_muduo" on ubuntu@119.29.35.60 (SSH)
-  g++ -std=c++11 -ggdb -ffunction-sections -O0   -DDEBUG=1  -c channel.cpp -o Debug/channel.o -MD -MF Debug/channel.dep
-  g++ -std=c++11 -ggdb -ffunction-sections -O0   -DDEBUG=1  -c epoller.cpp -o Debug/epoller.o -MD -MF Debug/epoller.dep
-  g++ -std=c++11 -ggdb -ffunction-sections -O0   -DDEBUG=1  -c eventLoop.cpp -o Debug/eventLoop.o -MD -MF Debug/eventLoop.dep
   g++ -std=c++11 -ggdb -ffunction-sections -O0   -DDEBUG=1  -c test.cpp -o Debug/test.o -MD -MF Debug/test.dep
-  g++ -std=c++11 -ggdb -ffunction-sections -O0   -DDEBUG=1  -c timeQueue.cpp -o Debug/timeQueue.o -MD -MF Debug/timeQueue.dep
-  g++ -o Debug/tiny_muduo -Wl,-gc-sections    -Wl,--start-group Debug/channel.o Debug/epoller.o Debug/eventLoop.o Debug/test.o Debug/thread.o Debug/threadpoll.o Debug/timeQueue.o Debug/timer.o Debug/timeStamp.o   -Wl,--rpath='$ORIGIN'  -lpthread -Wl,--end-group
+  g++ -o Debug/tiny_muduo -Wl,-gc-sections    -Wl,--start-group Debug/channel.o Debug/epoller.o Debug/eventLoop.o Debug/eventLoopThread.o Debug/test.o Debug/thread.o Debug/threadpoll.o Debug/timeQueue.o Debug/timer.o Debug/timeStamp.o   -Wl,--rpath='$ORIGIN'  -lpthread -Wl,--end-group

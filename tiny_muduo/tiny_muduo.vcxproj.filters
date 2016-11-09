@@ -77,6 +77,9 @@
     <ClInclude Include="timerQueue.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="eventLoopThread.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="thread.cpp">
@@ -104,6 +107,9 @@
       <Filter>Source files</Filter>
     </ClCompile>
     <ClCompile Include="timeQueue.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="eventLoopThread.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>

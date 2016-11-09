@@ -17,6 +17,7 @@ namespace cm
 		void addTimer(const TimerCallback& cb, TimeStamp when, double interval);
 	private:
 		using TimerList = std::multimap<TimeStamp, std::unique_ptr<Timer>>;
+		void addTimerInLoop(const TimerCallback& cb, TimeStamp when, double interval);
 		void handleRead();
 		std::vector<std::unique_ptr<Timer>> getExpired(TimeStamp now);
 		void reset(std::vector<std::unique_ptr<Timer>>&expired, TimeStamp now);
@@ -26,3 +27,4 @@ namespace cm
 		TimerList timers_;
 	};
 }
+

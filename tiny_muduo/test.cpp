@@ -4,24 +4,15 @@
 #include "channel.h"
 #include <sys/timerfd.h>
 #include <string.h>
-cm::EventLoop* g_loop;
+#include "eventLoopThread.h"
 void print(const std::string& msg) {
 	std::cout << msg << std::endl;
 }
-void func() {
-	g_loop->runAfter(1.0, std::bind(&print, "should be success"));
-}
-void run() {
-	g_loop->queueInLoop(func);
-}
 int main(int argc, char *argv[]){
 	std::cout << "pid: " << getpid() << " tid: " << cm::CurrentThread::tid() << "\n";
-	cm::EventLoop loop;
-	g_loop = &loop;
-	cm::Thread t(run);
-	loop.runAfter(2.0, std::bind(&print, "2s delay"));
-	t.start();
-	loop.loop();
-
+	cm::EventLoopThread et;
+	cm::EventLoop *loop = et.startLoop();
+	loop->queueInLoop(std::bind(&print, "anothread thread"));
+	sleep(1);
 	return 0;
 }

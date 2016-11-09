@@ -76,6 +76,7 @@
     <ClInclude Include="dbg.h" />
     <ClInclude Include="epoller.h" />
     <ClInclude Include="eventLoop.h" />
+    <ClInclude Include="eventLoopThread.h" />
     <ClInclude Include="mutexLock.h" />
     <ClInclude Include="nonCopyable.h" />
     <ClInclude Include="thread.h" />
@@ -88,6 +89,7 @@
     <ClCompile Include="channel.cpp" />
     <ClCompile Include="epoller.cpp" />
     <ClCompile Include="eventLoop.cpp" />
+    <ClCompile Include="eventLoopThread.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="thread.cpp" />
     <ClCompile Include="threadpoll.cpp" />
