@@ -5,26 +5,23 @@
 #include <sys/timerfd.h>
 #include <string.h>
 cm::EventLoop* g_loop;
-void timeout()
-{
-  printf("Timeout!\n");
-  g_loop->quit();
+void print(const std::string& msg) {
+	std::cout << "pid=" << ::getpid() << " tid=" << cm::CurrentThread::tid() << std::endl;
+	std::cout << "now " << cm::TimeStamp::now().toString() << std::endl;
+	std::cout << "msg: " << msg << std::endl;
 }
 int main(int argc, char *argv[]){
 	std::cout << "pid: " << getpid() << " tid: " << cm::CurrentThread::tid() << "\n";
 	cm::EventLoop loop;
 	g_loop = &loop;
-	int timerfd = ::timerfd_create(CLOCK_MONOTONIC, TFD_NONBLOCK | TFD_CLOEXEC);
-	cm::Channel channel(&loop, timerfd);
-	channel.setReadCallback(timeout);
-	channel.enableReading();
 	
-	struct itimerspec howlong;
-	bzero(&howlong, sizeof howlong);
-	howlong.it_value.tv_sec = 5;
-	::timerfd_settime(timerfd, 0, &howlong, NULL);
+	loop.runAfter(2, std::bind(&print, "2 second"));
+	loop.runAfter(1, std::bind(&print, "1 second"));
+	loop.runAfter(1.5, std::bind(&print, "1.5 second"));
+	loop.runEvery(1, std::bind(&print, "1 every"));
+	
 	
 	loop.loop();
-	::close(timerfd);
+
 	return 0;
 }

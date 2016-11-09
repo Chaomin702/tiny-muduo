@@ -68,6 +68,15 @@
     <ClInclude Include="timeStamp.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="timer.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="callback.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="timerQueue.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="thread.cpp">
@@ -89,6 +98,12 @@
       <Filter>Source files</Filter>
     </ClCompile>
     <ClCompile Include="timeStamp.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="timer.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="timeQueue.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>

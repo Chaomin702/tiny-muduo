@@ -11,6 +11,8 @@ namespace cm
 		}
 		static TimeStamp now();
 		static TimeStamp invalid();
+		bool valid()const {return microSecondsSinceEpoch_ > 0;}
+		std::string toString()const;
 		int64_t microSecondsSinceEpoch()const {return microSecondsSinceEpoch_;}
 		static const int kMicroSencondPerSecond = 1000 * 1000;
 	private:

@@ -1,6 +1,7 @@
 #include "eventLoop.h"
 #include "epoller.h"
 #include "channel.h"
+#include "timerQueue.h"
 #include "dbg.h"
 using namespace cm;
 const int kPollTimeMs = 1000;
@@ -9,7 +10,8 @@ EventLoop::EventLoop()
 	: looping_(false)
 	, quit_(false)
 	, threadId_(CurrentThread::tid()) 
-	, epoller_(new Epoller(this)){
+	, epoller_(new Epoller(this))
+	, timerQueue_(new TimerQueue(this)){
 		log_info("Eventloop create in thread %d", threadId_);
 		if (LoopInThisThread) {
 			log_err("Another Eventloop exists in this thread %d", CurrentThread::tid());
@@ -44,4 +46,23 @@ void EventLoop::updateChannel(Channel *channel) {
 	assert(channel->ownerLoop() == this);
 	assertInLoopThread();
 	epoller_->updateChannel(channel);
+}
+
+
+void cm::EventLoop::runAt(const TimeStamp& time, const TimerCallback& cb) {
+	timerQueue_->addTimer(cb, time, 0);
+}
+
+
+void cm::EventLoop::runAfter(double delay, const TimerCallback& cb) {
+	TimeStamp time(addTime(TimeStamp::now(), delay));
+	runAt(time, cb);
+}
+
+
+
+
+void cm::EventLoop::runEvery(double interval, const TimerCallback& cb) {
+	TimeStamp time(addTime(TimeStamp::now(), interval));
+	timerQueue_->addTimer(cb, time, interval);
 }

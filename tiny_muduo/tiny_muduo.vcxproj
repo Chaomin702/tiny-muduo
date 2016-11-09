@@ -70,6 +70,7 @@
     <None Include="tiny_muduo-Release.vgdbsettings" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="callback.h" />
     <ClInclude Include="channel.h" />
     <ClInclude Include="condition.h" />
     <ClInclude Include="dbg.h" />
@@ -79,6 +80,8 @@
     <ClInclude Include="nonCopyable.h" />
     <ClInclude Include="thread.h" />
     <ClInclude Include="threadPoll.h" />
+    <ClInclude Include="timer.h" />
+    <ClInclude Include="timerQueue.h" />
     <ClInclude Include="timeStamp.h" />
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +91,8 @@
     <ClCompile Include="test.cpp" />
     <ClCompile Include="thread.cpp" />
     <ClCompile Include="threadpoll.cpp" />
+    <ClCompile Include="timeQueue.cpp" />
+    <ClCompile Include="timer.cpp" />
     <ClCompile Include="timeStamp.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
