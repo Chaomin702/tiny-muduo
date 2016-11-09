@@ -6,7 +6,7 @@
 #include "unistd.h"
 #include <sys/eventfd.h>
 using namespace cm;
-const int kPollTimeMs = 1000;
+const int kPollTimeMs = 10000;
 __thread EventLoop* LoopInThisThread = NULL;
 
 int createEventfd() {

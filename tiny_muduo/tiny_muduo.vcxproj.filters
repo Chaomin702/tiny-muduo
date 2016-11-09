@@ -80,6 +80,18 @@
     <ClInclude Include="eventLoopThread.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="inetAddress.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="socketOps.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="socket.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="acceptor.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="thread.cpp">
@@ -110,6 +122,18 @@
       <Filter>Source files</Filter>
     </ClCompile>
     <ClCompile Include="eventLoopThread.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="inetAddress.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="socketOps.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="socket.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="acceptor.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>

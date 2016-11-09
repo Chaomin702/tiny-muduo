@@ -5,14 +5,19 @@
 #include <sys/timerfd.h>
 #include <string.h>
 #include "eventLoopThread.h"
-void print(const std::string& msg) {
-	std::cout << msg << std::endl;
+#include "socket.h"
+#include "acceptor.h"
+void newConnection(const cm::Socket& connSock, const cm::InetAddress& addr) {
+	std::cout << "new connection accepted from " << addr.toHostPort() << std::endl;
+	::write(connSock.fd(), "Hello~", 7);
 }
 int main(int argc, char *argv[]){
 	std::cout << "pid: " << getpid() << " tid: " << cm::CurrentThread::tid() << "\n";
-	cm::EventLoopThread et;
-	cm::EventLoop *loop = et.startLoop();
-	loop->queueInLoop(std::bind(&print, "anothread thread"));
-	sleep(1);
+	cm::InetAddress listenAddr(9981);
+	cm::EventLoop loop;
+	cm::Acceptor acceptor(&loop, listenAddr);
+	acceptor.setNewConnectionCallback(newConnection);
+	acceptor.listen();
+	loop.loop();
 	return 0;
 }
