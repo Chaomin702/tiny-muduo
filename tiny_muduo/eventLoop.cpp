@@ -24,7 +24,7 @@ EventLoop::EventLoop()
 	, epoller_(new Epoller(this))
 	, timerQueue_(new TimerQueue(this))
 	, wakeupFd_(createEventfd())
-	, wakeupChannel_(std::unique_ptr<Channel>(new Channel(this,wakeupFd_))){
+	, wakeupChannel_(new Channel(this,wakeupFd_)){
 		log_info("Eventloop create in thread %d", threadId_);
 		if (LoopInThisThread) {
 			log_err("Another Eventloop exists in this thread %d", CurrentThread::tid());
@@ -127,4 +127,18 @@ void EventLoop::quit() {
 	quit_ = true;
 	if (!isInLoopThread())
 		wakeup();
+}
+
+void cm::EventLoop::removeChannel(Channel *channel) {
+	assert(channel->ownerLoop() == this);
+	assertInLoopThread();
+	epoller_->removeChannel(channel);
+}
+
+
+void cm::EventLoop::runInLoop(const Functor&functor) {
+	if (isInLoopThread())
+		functor();
+	else
+		queueInLoop(functor);
 }

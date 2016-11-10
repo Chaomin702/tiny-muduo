@@ -1,11 +1,14 @@
 #include "socket.h"
 #include "socketOps.h"
 #include <string.h>
+#include "dbg.h"
 using namespace cm;
 
 
 cm::Socket::~Socket() {
-	cm::sockets::close(socketfd_);
+	log_info("Socket %d closed", socketfd_);
+	if (socketfd_ >= 0)
+		cm::sockets::close(socketfd_);
 }
 
 

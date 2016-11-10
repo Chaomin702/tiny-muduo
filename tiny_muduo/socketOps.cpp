@@ -74,3 +74,13 @@ void cm::sockets::toHostPort(char* buf, size_t size, const struct sockaddr_in& a
 	uint16_t port = ::ntohs(addr.sin_port);
 	snprintf(buf, size, "%s:%u", host, port);
 }
+
+
+struct sockaddr_in cm::sockets::getLocalAddr(int sockfd) {
+	struct sockaddr_in localAddr;
+	bzero(&localAddr, sizeof localAddr);
+	socklen_t addrlen = sizeof(localAddr);
+	if (::getsockname(sockfd, sockaddr_cast(&localAddr), &addrlen) < 0)
+		log_err("sockets::getlocalAddr error");
+	return localAddr;
+}

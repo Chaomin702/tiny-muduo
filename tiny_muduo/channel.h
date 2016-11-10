@@ -9,16 +9,20 @@ namespace cm
 	public:
 		using EventCallback = std::function<void()>;
 		Channel(EventLoop *loop, int fd);
-		//~Channel();
+		~Channel();
 		void handleEvent();
 		void setReadCallback(const EventCallback& callback) {readCallback_ = callback;}
 		void setWriteCallback(const EventCallback& callback) {writeCallback_ = callback;}
 		void setErrorCallback(const EventCallback& callback) {errorCallback_ = callback;}
+		void setCloseCallback(const EventCallback& callback) {closeCallback_ = callback;}
 		void setRevents(int revents) {revents_ = revents;}
 		void setIndex(int index) {index_ = index;}
+		
 		int fd()const {return fd_;}
 		int events()const {return events_;}
 		int index()const {return index_;}
+		bool isNoneEvent()const {return events_ == kNoneEvent;}
+		void disableAll() {events_ = kNoneEvent;update();}
 		void enableReading() {events_ |= kReadEvent; update();}
 		EventLoop* ownerLoop() {return loop_;}
 	private:
@@ -31,9 +35,10 @@ namespace cm
 		int events_;
 		int revents_;
 		int index_;
+		bool eventHandling;
 		EventCallback readCallback_;
 		EventCallback writeCallback_;
 		EventCallback errorCallback_;
-		
+		EventCallback closeCallback_;
 	};
 }

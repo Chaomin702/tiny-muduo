@@ -58,7 +58,7 @@ TimerQueue::~TimerQueue() {
 	::close(timerfd_);
 }
 void TimerQueue::addTimer(const TimerCallback& cb, TimeStamp when, double interval) {
-	loop_->queueInLoop(std::bind(&TimerQueue::addTimerInLoop, this, cb, when, interval));
+	loop_->runInLoop(std::bind(&TimerQueue::addTimerInLoop, this, cb, when, interval));
 }
 void cm::TimerQueue::addTimerInLoop(const TimerCallback& cb, TimeStamp when, double interval) {
 	loop_->assertInLoopThread();

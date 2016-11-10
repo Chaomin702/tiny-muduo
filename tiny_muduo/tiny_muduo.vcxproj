@@ -84,6 +84,7 @@
     <ClInclude Include="socket.h" />
     <ClInclude Include="socketOps.h" />
     <ClInclude Include="tcpConnection.h" />
+    <ClInclude Include="tcpServer.h" />
     <ClInclude Include="thread.h" />
     <ClInclude Include="threadPoll.h" />
     <ClInclude Include="timer.h" />
@@ -99,6 +100,8 @@
     <ClCompile Include="inetAddress.cpp" />
     <ClCompile Include="socket.cpp" />
     <ClCompile Include="socketOps.cpp" />
+    <ClCompile Include="tcpConnection.cpp" />
+    <ClCompile Include="tcpServer.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="thread.cpp" />
     <ClCompile Include="threadpoll.cpp" />

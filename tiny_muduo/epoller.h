@@ -16,6 +16,7 @@ namespace cm
 		~Epoller();
 		TimeStamp poll(int timeoutMs,ChannelList*);
 		void updateChannel(Channel *channel);
+		void removeChannel(Channel *channel);
 	private:
 		void update(int opt, Channel *channel);
 		void fillUpdateChannels(int numEvents, ChannelList *activeChannels);

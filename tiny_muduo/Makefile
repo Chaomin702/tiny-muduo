@@ -35,7 +35,7 @@ error:
 	$(error Invalid configuration, please check your inputs)
 endif
 
-SOURCEFILES := acceptor.cpp channel.cpp epoller.cpp eventLoop.cpp eventLoopThread.cpp inetAddress.cpp socket.cpp socketOps.cpp test.cpp thread.cpp threadpoll.cpp timeQueue.cpp timer.cpp timeStamp.cpp
+SOURCEFILES := acceptor.cpp channel.cpp epoller.cpp eventLoop.cpp eventLoopThread.cpp inetAddress.cpp socket.cpp socketOps.cpp tcpConnection.cpp tcpServer.cpp test.cpp thread.cpp threadpoll.cpp timeQueue.cpp timer.cpp timeStamp.cpp
 EXTERNAL_LIBS := 
 EXTERNAL_LIBS_COPIED := $(foreach lib, $(EXTERNAL_LIBS),$(BINARYDIR)/$(notdir $(lib)))
 

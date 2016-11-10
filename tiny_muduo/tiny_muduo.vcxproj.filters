@@ -95,6 +95,9 @@
     <ClInclude Include="tcpConnection.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="tcpServer.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="thread.cpp">
@@ -137,6 +140,12 @@
       <Filter>Source files</Filter>
     </ClCompile>
     <ClCompile Include="acceptor.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="tcpConnection.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="tcpServer.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>

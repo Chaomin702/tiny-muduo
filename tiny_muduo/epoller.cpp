@@ -7,7 +7,7 @@
 #include "eventLoop.h"
 using namespace cm;
 const int KNew = -1;
-const int KAdd = 1;
+const int KAdded = 1;
 const int KDelete = 2;
 Epoller::Epoller(EventLoop *loop)
 	: ownerLoop_(loop)
@@ -59,14 +59,41 @@ void Epoller::fillUpdateChannels(int numEvents, ChannelList *activeChannels) {
 void Epoller::updateChannel(Channel *channel) {
 	ownerLoop_->assertInLoopThread();
 	const int index = channel->index();
-	if (index == KNew) {
-		int fd = channel->fd();
-		assert(channels_.find(fd) == channels_.end());
-		channels_[fd] = channel;
+	int fd = channel->fd();
+	if (index == KNew || index == KDelete) { //Ôø¾­É¾³ý¹ýµÄ
+		if (index == KNew) {
+			assert(channels_.find(fd) == channels_.end());
+			channels_[fd] = channel;
+		 }else{
+			 assert(channels_.find(fd) != channels_.end());
+			 assert(channels_[fd] == channel);
+		 }
 		update(EPOLL_CTL_ADD, channel);
-		channel->setIndex(KAdd);
+		channel->setIndex(KAdded);
 	}else{
-		//TODO
-		//modify channel
+		assert(channels_.find(fd) != channels_.end());
+		assert(channels_[fd] == channel);
+		assert(index == KAdded);
+		if (channel->isNoneEvent()) {
+			update(EPOLL_CTL_DEL, channel);
+			channel->setIndex(KDelete);
+		}else{
+			update(EPOLL_CTL_MOD, channel);
+		}
 	}
+}
+
+void cm::Epoller::removeChannel(Channel *channel) {
+	ownerLoop_->assertInLoopThread();
+	int fd = channel->fd();
+	log_info("fd = %d", fd);
+	assert(channels_.find(fd) != channels_.end());
+	assert(channels_[fd] == channel);
+	assert(channel->isNoneEvent());
+	int index = channel->index();
+	assert(index == KAdded || index == KDelete);
+	channels_.erase(fd);
+	if (index == KAdded)
+		update(EPOLL_CTL_DEL, channel);
+	channel->setIndex(KNew);
 }

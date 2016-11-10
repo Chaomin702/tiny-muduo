@@ -28,8 +28,10 @@ namespace cm
 		void runEvery(double interval, const TimerCallback& cb);
 		bool isInLoopThread(){return threadId_ == CurrentThread::tid();}
 		void updateChannel(Channel *channel);
+		void removeChannel(Channel *channel);
 		void wakeup();
 		void queueInLoop(const Functor&);
+		void runInLoop(const Functor&);
 	private :
 		using ChannelList = std::vector<Channel*>;
 		
