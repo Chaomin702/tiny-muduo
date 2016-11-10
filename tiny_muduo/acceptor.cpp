@@ -17,7 +17,9 @@ cm::Acceptor::Acceptor(EventLoop *loop, const InetAddress&addr)
 
 
 void cm::Acceptor::listen() {
+	std::cout << "test" << std::endl;
 	loop_->assertInLoopThread();
+	std::cout << "test over" << std::endl;
 	listenning_ = true;
 	acceptChannel_.enableReading();
 	acceptSocket_.listen();

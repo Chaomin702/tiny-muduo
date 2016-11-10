@@ -92,6 +92,9 @@
     <ClInclude Include="acceptor.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="tcpConnection.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="thread.cpp">

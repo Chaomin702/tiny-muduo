@@ -83,6 +83,7 @@
     <ClInclude Include="nonCopyable.h" />
     <ClInclude Include="socket.h" />
     <ClInclude Include="socketOps.h" />
+    <ClInclude Include="tcpConnection.h" />
     <ClInclude Include="thread.h" />
     <ClInclude Include="threadPoll.h" />
     <ClInclude Include="timer.h" />
