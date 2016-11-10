@@ -21,6 +21,7 @@ namespace cm
 		int accept(InetAddress *peeraddr);
 		void setReuseAddr(bool on);
 		void shutdownWrite();
+		void setTcpNoDelay(bool on);
 	private:
 		int socketfd_;
 	};

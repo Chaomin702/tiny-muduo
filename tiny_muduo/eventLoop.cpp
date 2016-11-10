@@ -5,6 +5,7 @@
 #include "dbg.h"
 #include "unistd.h"
 #include <sys/eventfd.h>
+#include <sys/signal.h>
 using namespace cm;
 const int kPollTimeMs = 10000;
 __thread EventLoop* LoopInThisThread = NULL;
@@ -16,6 +17,14 @@ int createEventfd() {
 	}
 	return fd;
 }
+class IgnoreSigPipe {
+public:
+	IgnoreSigPipe() {
+		::signal(SIGPIPE, SIG_IGN);
+	}
+};
+IgnoreSigPipe initObj;
+
 EventLoop::EventLoop()
 	: looping_(false)
 	, quit_(false)

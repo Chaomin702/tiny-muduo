@@ -1,4 +1,9 @@
-﻿  VisualGDB: Sending 1 updated source file to build machine...
+﻿  VisualGDB: Sending 3 updated source files to build machine...
   VisualGDB: Run "make CONFIG=Debug" in directory "/tmp/VisualGDB/d/server-programming/tiny_muduo/tiny_muduo" on ubuntu@119.29.35.60 (SSH)
+  g++ -std=c++11 -ggdb -ffunction-sections -O0   -DDEBUG=1  -c acceptor.cpp -o Debug/acceptor.o -MD -MF Debug/acceptor.dep
+  g++ -std=c++11 -ggdb -ffunction-sections -O0   -DDEBUG=1  -c eventLoop.cpp -o Debug/eventLoop.o -MD -MF Debug/eventLoop.dep
+  g++ -std=c++11 -ggdb -ffunction-sections -O0   -DDEBUG=1  -c socket.cpp -o Debug/socket.o -MD -MF Debug/socket.dep
+  g++ -std=c++11 -ggdb -ffunction-sections -O0   -DDEBUG=1  -c tcpConnection.cpp -o Debug/tcpConnection.o -MD -MF Debug/tcpConnection.dep
+  g++ -std=c++11 -ggdb -ffunction-sections -O0   -DDEBUG=1  -c tcpServer.cpp -o Debug/tcpServer.o -MD -MF Debug/tcpServer.dep
   g++ -std=c++11 -ggdb -ffunction-sections -O0   -DDEBUG=1  -c test.cpp -o Debug/test.o -MD -MF Debug/test.dep
   g++ -o Debug/tiny_muduo -Wl,-gc-sections    -Wl,--start-group Debug/acceptor.o Debug/buffer.o Debug/channel.o Debug/epoller.o Debug/eventLoop.o Debug/eventLoopThread.o Debug/inetAddress.o Debug/socket.o Debug/socketOps.o Debug/tcpConnection.o Debug/tcpServer.o Debug/test.o Debug/thread.o Debug/threadpoll.o Debug/timeQueue.o Debug/timer.o Debug/timeStamp.o   -Wl,--rpath='$ORIGIN'  -lpthread -Wl,--end-group

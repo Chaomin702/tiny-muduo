@@ -46,3 +46,12 @@ void cm::Socket::setReuseAddr(bool on) {
 void cm::Socket::shutdownWrite() {
 	sockets::shutdownWrite(socketfd_);
 }
+
+
+void cm::Socket::setTcpNoDelay(bool on) {
+	int optval = on ? 1 : 0;
+	int ret = ::setsockopt(socketfd_, SOL_SOCKET, SO_REUSEADDR,
+               &optval, sizeof optval);
+	if (ret < 0)
+		log_err("Socket setTcpNoDelay failed");
+}
