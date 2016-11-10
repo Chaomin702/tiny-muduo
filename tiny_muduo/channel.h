@@ -1,6 +1,7 @@
 #pragma once
 #include "nonCopyable.h"
 #include <functional>
+#include "timeStamp.h"
 namespace cm 
 {
 	class EventLoop;
@@ -8,10 +9,11 @@ namespace cm
 	class Channel : public NonCopyable {
 	public:
 		using EventCallback = std::function<void()>;
+		using readEventCallback = std::function<void(TimeStamp)>;
 		Channel(EventLoop *loop, int fd);
 		~Channel();
-		void handleEvent();
-		void setReadCallback(const EventCallback& callback) {readCallback_ = callback;}
+		void handleEvent(TimeStamp receiveTime);
+		void setReadCallback(const readEventCallback& callback) {readCallback_ = callback;}
 		void setWriteCallback(const EventCallback& callback) {writeCallback_ = callback;}
 		void setErrorCallback(const EventCallback& callback) {errorCallback_ = callback;}
 		void setCloseCallback(const EventCallback& callback) {closeCallback_ = callback;}
@@ -36,7 +38,7 @@ namespace cm
 		int revents_;
 		int index_;
 		bool eventHandling;
-		EventCallback readCallback_;
+		readEventCallback readCallback_;
 		EventCallback writeCallback_;
 		EventCallback errorCallback_;
 		EventCallback closeCallback_;

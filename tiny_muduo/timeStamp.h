@@ -13,8 +13,9 @@ namespace cm
 		static TimeStamp invalid();
 		bool valid()const {return microSecondsSinceEpoch_ > 0;}
 		std::string toString()const;
+		std::string toFormattedString()const;
 		int64_t microSecondsSinceEpoch()const {return microSecondsSinceEpoch_;}
-		static const int kMicroSencondPerSecond = 1000 * 1000;
+		static const int kMicroSecondPerSecond = 1000 * 1000;
 	private:
 		int64_t microSecondsSinceEpoch_;
 	};
@@ -25,7 +26,7 @@ namespace cm
 		return lhs.microSecondsSinceEpoch() == rhs.microSecondsSinceEpoch();
 	}
 	inline TimeStamp addTime(TimeStamp timestamp, double seconds) {
-		int64_t delta = static_cast<int64_t >(seconds*TimeStamp::kMicroSencondPerSecond);
+		int64_t delta = static_cast<int64_t >(seconds*TimeStamp::kMicroSecondPerSecond);
 		return TimeStamp(timestamp.microSecondsSinceEpoch() + delta);
 	}
 }

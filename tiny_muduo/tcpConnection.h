@@ -6,6 +6,7 @@
 #include <string>
 #include "socket.h"
 #include "channel.h"
+#include "buffer.h"
 namespace cm 
 {
 	class EventLoop;
@@ -33,7 +34,7 @@ namespace cm
 	private:
 		enum StateE { kConnecting, kConnected, kDisconnected,};
 		void setState(StateE s) {state_ = s;}
-		void handleRead();
+		void handleRead(TimeStamp receiveTime);
 		void handleWrite();
 		void handleClose();
 		void handleError();
@@ -47,6 +48,7 @@ namespace cm
 		ConnectionCallback connectionCallback_;
 		MessageCallback messageCallback_;
 		CloseCallback closeCallback_;
+		Buffer inputBuffer_;
 	};
 	using TcpConnetionPtr = std::shared_ptr<TcpConnection>;
 }

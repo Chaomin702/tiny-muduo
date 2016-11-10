@@ -23,8 +23,10 @@ void onConnection(const cm::TcpConnetionPtr& conn) {
 		std::cout << "connection " << conn->name() << " from " << conn->peerAddress().toHostPort()<< " is close" << std::endl;
 	}
 }
-void onMessage(const cm::TcpConnetionPtr& conn, const char* data, ssize_t len) {
-	std::cout << "onMessage(): received " << len << "bytes from connection" << conn->name().c_str() << std::endl;
+void onMessage(const cm::TcpConnetionPtr& conn, cm::Buffer *buf, cm::TimeStamp receiveTime ) {
+	std::cout << "onMessage(): received " << buf->readableBytes() 
+		<< "bytes from connection" << conn->name().c_str() 
+		<< " at " << receiveTime.toFormattedString().c_str() << std::endl;
 }
 int main(int argc, char *argv[]){
 	std::cout << "pid: " << getpid() << " tid: " << cm::CurrentThread::tid() << "\n";

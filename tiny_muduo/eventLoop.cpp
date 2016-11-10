@@ -48,9 +48,9 @@ void EventLoop::loop() {
 	log_info("EventLoop start running");
 	while (!quit_) {
 		activeChannels_.clear();
-		epoller_->poll(kPollTimeMs, &activeChannels_);
+	 	epollReturnTime_ =  epoller_->poll(kPollTimeMs, &activeChannels_);
 		for (auto&i : activeChannels_) {
-			i->handleEvent();
+			i->handleEvent(epollReturnTime_);
 		}
 		doPendingFunctors();
 	}

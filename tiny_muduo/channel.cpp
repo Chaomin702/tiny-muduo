@@ -22,7 +22,7 @@ void Channel::update() {
 	loop_->updateChannel(this);
 }
 
-void Channel::handleEvent() {
+void Channel::handleEvent(TimeStamp receiveTime) {
 	eventHandling = true;
 	if ((revents_ & EPOLLHUP) && !(revents_ & EPOLLIN)) {
 		log_info("hangle event close!");
@@ -32,7 +32,7 @@ void Channel::handleEvent() {
 		if (errorCallback_)errorCallback_();
 	}
 	if (revents_&(EPOLLIN | EPOLLPRI | EPOLLRDHUP)) {
-		if (readCallback_) readCallback_();
+		if (readCallback_) readCallback_(receiveTime);
 	}
 	if (revents_&EPOLLOUT) {
 		if (writeCallback_) writeCallback_();

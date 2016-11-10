@@ -19,8 +19,8 @@ namespace cm {
 			if (microseconds < 100) //it's essential
 				microseconds = 100;
 			struct timespec ts;
-			ts.tv_sec = static_cast<time_t>(microseconds / TimeStamp::kMicroSencondPerSecond);
-			ts.tv_nsec = static_cast<long>((microseconds % TimeStamp::kMicroSencondPerSecond) * 1000);
+			ts.tv_sec = static_cast<time_t>(microseconds / TimeStamp::kMicroSecondPerSecond);
+			ts.tv_nsec = static_cast<long>((microseconds % TimeStamp::kMicroSecondPerSecond) * 1000);
 			return ts;
 		}
 		void readTimerfd(int timerfd, TimeStamp now) {

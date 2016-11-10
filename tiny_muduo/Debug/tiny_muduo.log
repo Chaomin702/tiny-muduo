@@ -1,22 +1,3 @@
-﻿  Updating D:\server-programming\tiny_muduo\tiny_muduo\Makefile
-  VisualGDB: Updated source file list in D:\server-programming\tiny_muduo\tiny_muduo\Makefile. Enable verbose mode for more details.
-  VisualGDB: Sending 3 updated source files to build machine...
+﻿  VisualGDB: No file changes detected. If you believe it's a mistake, please clean the project and build it again.
   VisualGDB: Run "make CONFIG=Debug" in directory "/tmp/VisualGDB/d/server-programming/tiny_muduo/tiny_muduo" on ubuntu@119.29.35.60 (SSH)
-  g++ -std=c++11 -ggdb -ffunction-sections -O0   -DDEBUG=1  -c acceptor.cpp -o Debug/acceptor.o -MD -MF Debug/acceptor.dep
-  g++ -std=c++11 -ggdb -ffunction-sections -O0   -DDEBUG=1  -c buffer.cpp -o Debug/buffer.o -MD -MF Debug/buffer.dep
-  g++ -std=c++11 -ggdb -ffunction-sections -O0   -DDEBUG=1  -c channel.cpp -o Debug/channel.o -MD -MF Debug/channel.dep
-  g++ -std=c++11 -ggdb -ffunction-sections -O0   -DDEBUG=1  -c epoller.cpp -o Debug/epoller.o -MD -MF Debug/epoller.dep
-  g++ -std=c++11 -ggdb -ffunction-sections -O0   -DDEBUG=1  -c eventLoop.cpp -o Debug/eventLoop.o -MD -MF Debug/eventLoop.dep
-  g++ -std=c++11 -ggdb -ffunction-sections -O0   -DDEBUG=1  -c eventLoopThread.cpp -o Debug/eventLoopThread.o -MD -MF Debug/eventLoopThread.dep
-  g++ -std=c++11 -ggdb -ffunction-sections -O0   -DDEBUG=1  -c inetAddress.cpp -o Debug/inetAddress.o -MD -MF Debug/inetAddress.dep
-  g++ -std=c++11 -ggdb -ffunction-sections -O0   -DDEBUG=1  -c socket.cpp -o Debug/socket.o -MD -MF Debug/socket.dep
-  g++ -std=c++11 -ggdb -ffunction-sections -O0   -DDEBUG=1  -c socketOps.cpp -o Debug/socketOps.o -MD -MF Debug/socketOps.dep
-  g++ -std=c++11 -ggdb -ffunction-sections -O0   -DDEBUG=1  -c tcpConnection.cpp -o Debug/tcpConnection.o -MD -MF Debug/tcpConnection.dep
-  g++ -std=c++11 -ggdb -ffunction-sections -O0   -DDEBUG=1  -c tcpServer.cpp -o Debug/tcpServer.o -MD -MF Debug/tcpServer.dep
-  g++ -std=c++11 -ggdb -ffunction-sections -O0   -DDEBUG=1  -c test.cpp -o Debug/test.o -MD -MF Debug/test.dep
-  g++ -std=c++11 -ggdb -ffunction-sections -O0   -DDEBUG=1  -c thread.cpp -o Debug/thread.o -MD -MF Debug/thread.dep
-  g++ -std=c++11 -ggdb -ffunction-sections -O0   -DDEBUG=1  -c threadpoll.cpp -o Debug/threadpoll.o -MD -MF Debug/threadpoll.dep
-  g++ -std=c++11 -ggdb -ffunction-sections -O0   -DDEBUG=1  -c timeQueue.cpp -o Debug/timeQueue.o -MD -MF Debug/timeQueue.dep
-  g++ -std=c++11 -ggdb -ffunction-sections -O0   -DDEBUG=1  -c timer.cpp -o Debug/timer.o -MD -MF Debug/timer.dep
-  g++ -std=c++11 -ggdb -ffunction-sections -O0   -DDEBUG=1  -c timeStamp.cpp -o Debug/timeStamp.o -MD -MF Debug/timeStamp.dep
-  g++ -o Debug/tiny_muduo -Wl,-gc-sections    -Wl,--start-group Debug/acceptor.o Debug/buffer.o Debug/channel.o Debug/epoller.o Debug/eventLoop.o Debug/eventLoopThread.o Debug/inetAddress.o Debug/socket.o Debug/socketOps.o Debug/tcpConnection.o Debug/tcpServer.o Debug/test.o Debug/thread.o Debug/threadpoll.o Debug/timeQueue.o Debug/timer.o Debug/timeStamp.o   -Wl,--rpath='$ORIGIN'  -lpthread -Wl,--end-group
+  make: Nothing to be done for `all'.

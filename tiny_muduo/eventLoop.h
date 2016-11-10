@@ -23,6 +23,7 @@ namespace cm
 				abortNotInLoopThread();
 			}
 		}
+		TimeStamp epollReturnTime()const {return epollReturnTime_;}
 		void runAt(const TimeStamp& time, const TimerCallback& cb);
 		void runAfter(double delay, const TimerCallback& cb);
 		void runEvery(double interval, const TimerCallback& cb);
@@ -43,6 +44,7 @@ namespace cm
 		bool looping_;
 		bool quit_;
 		bool callingPendingFunctors_;
+		TimeStamp epollReturnTime_;
 		const pid_t threadId_;
 		std::unique_ptr<Epoller> epoller_;
 		std::unique_ptr<TimerQueue> timerQueue_;
