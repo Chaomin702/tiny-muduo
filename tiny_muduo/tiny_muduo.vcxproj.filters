@@ -98,6 +98,9 @@
     <ClInclude Include="tcpServer.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="buffer.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="thread.cpp">
@@ -146,6 +149,9 @@
       <Filter>Source files</Filter>
     </ClCompile>
     <ClCompile Include="tcpServer.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="buffer.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>
