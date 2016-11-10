@@ -1,0 +1,11 @@
+Debug
+Release
+*.opensdf
+*.sdf
+*.suo
+*.old
+*.npa
+*.npd
+VisualGDBCache
+/CodeDB
+CodeDB

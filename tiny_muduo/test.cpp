@@ -8,6 +8,8 @@
 #include "acceptor.h"
 #include "tcpServer.h"
 #include "tcpConnection.h"
+
+std::string message1, message2;
 void newConnection(const cm::Socket& connSock, const cm::InetAddress& addr) {
 	std::cout << "new connection accepted from " << addr.toHostPort() << std::endl;
 	::write(connSock.fd(), "Hello~", 7);
@@ -19,6 +21,8 @@ void configure(cm::Acceptor *acceptor) {
 void onConnection(const cm::TcpConnetionPtr& conn) {
 	if (conn->connected()) {
 		std::cout << "new connection " << conn->name() << " from " << conn->peerAddress().toHostPort() << std::endl;
+		conn->send(message1);
+		conn->send(message2);
 	}else{
 		std::cout << "connection " << conn->name() << " from " << conn->peerAddress().toHostPort()<< " is close" << std::endl;
 	}
@@ -30,6 +34,11 @@ void onMessage(const cm::TcpConnetionPtr& conn, cm::Buffer *buf, cm::TimeStamp r
 }
 int main(int argc, char *argv[]){
 	std::cout << "pid: " << getpid() << " tid: " << cm::CurrentThread::tid() << "\n";
+	int len = 1000000;
+	message1.resize(len);
+	message2.resize(len);
+	std::fill(message1.begin(), message1.end(), 'A');
+	std::fill(message2.begin(), message2.end(), 'B');
 	cm::InetAddress listenAddr(3000);
 	cm::EventLoop loop;
 	cm::TcpServer server(&loop, listenAddr);
@@ -37,9 +46,5 @@ int main(int argc, char *argv[]){
 	server.setMessageCallback(onMessage);
 	server.start();
 	loop.loop();
-//	cm::Acceptor acceptor(&loop, listenAddr);
-//	acceptor.setNewConnectionCallback(newConnection);
-//	acceptor.listen();
-//	loop.loop();
 	return 0;
 }

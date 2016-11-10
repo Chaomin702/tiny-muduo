@@ -26,6 +26,9 @@ namespace cm
 		bool isNoneEvent()const {return events_ == kNoneEvent;}
 		void disableAll() {events_ = kNoneEvent;update();}
 		void enableReading() {events_ |= kReadEvent; update();}
+		void enableWriting() {events_ |= kWriteEvent;update();}
+		void disableWriting() {events_ &= ~kWriteEvent;update();}
+		bool isWriting()const {return events_ & kWriteEvent;}
 		EventLoop* ownerLoop() {return loop_;}
 	private:
 		void update();

@@ -84,3 +84,9 @@ struct sockaddr_in cm::sockets::getLocalAddr(int sockfd) {
 		log_err("sockets::getlocalAddr error");
 	return localAddr;
 }
+
+
+void cm::sockets::shutdownWrite(int sockfd) {
+	if (::shutdown(sockfd, SHUT_WR) < 0)
+		log_err("sockets::shutdownWrite error");
+}

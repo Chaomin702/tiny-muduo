@@ -41,3 +41,8 @@ void cm::Socket::setReuseAddr(bool on) {
 	::setsockopt(socketfd_, SOL_SOCKET, SO_REUSEADDR,
                &optval, sizeof optval);
 }
+
+
+void cm::Socket::shutdownWrite() {
+	sockets::shutdownWrite(socketfd_);
+}

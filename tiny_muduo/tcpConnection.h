@@ -31,13 +31,17 @@ namespace cm
 		}
 		void connectionEstablished();
 		void connectionDestroyed();
+		void send(const std::string& message);
+		void shutdown();
 	private:
-		enum StateE { kConnecting, kConnected, kDisconnected,};
+		enum StateE { kConnecting, kConnected, kDisconnecting ,kDisconnected,};
 		void setState(StateE s) {state_ = s;}
 		void handleRead(TimeStamp receiveTime);
 		void handleWrite();
 		void handleClose();
 		void handleError();
+		void sendInLoop(const std::string& message);
+		void shutdownInLoop();
 		EventLoop *loop_;
 		std::string name_;
 		StateE state_;
@@ -49,6 +53,7 @@ namespace cm
 		MessageCallback messageCallback_;
 		CloseCallback closeCallback_;
 		Buffer inputBuffer_;
+		Buffer outputBuffer_;
 	};
 	using TcpConnetionPtr = std::shared_ptr<TcpConnection>;
 }
