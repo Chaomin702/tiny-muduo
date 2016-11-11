@@ -25,6 +25,7 @@ void onConnection(const cm::TcpConnetionPtr& conn) {
 		<< " thread id=" << cm::CurrentThread::tid() << std::endl;
 		conn->send(message1);
 		conn->send(message2);
+		conn->shutdown();
 	}else{
 		std::cout << "connection " << conn->name() << " from " << conn->peerAddress().toHostPort()<< " is close" << std::endl;
 	}
@@ -46,7 +47,7 @@ int main(int argc, char *argv[]){
 	cm::TcpServer server(&loop, listenAddr);
 	server.setConnectionCallback(onConnection);
 	server.setMessageCallback(onMessage);
-	server.setThreadNum(2);
+	server.setThreadNum(5);
 	server.start();
 	loop.loop();
 	return 0;

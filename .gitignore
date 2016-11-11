@@ -8,3 +8,6 @@ Release
 *.npd
 VisualGDBCache
 CodeDB
+/tiny_muduo/Debug
+/tiny_muduo/VisualGDBCache
+!README.md

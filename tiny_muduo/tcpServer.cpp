@@ -39,7 +39,7 @@ void cm::TcpServer::newConnection(const Socket& connSocket, const InetAddress& p
 	snprintf(buf, sizeof buf, "#%d", nextConnId_);
 	++nextConnId_;
 	std::string connName = name_ + buf;
-//	log_info("new TCP connection [%s] from %s", connName.c_str(), peerAddr.toHostPort().c_str());
+	log_info("new connection socket fd=%d", connSocket.fd());
 	InetAddress localAddr(sockets::getLocalAddr(connSocket.fd()));
 	EventLoop *ioLoop = threadPoll_->getnextLoop();
 	TcpConnetionPtr conn(new TcpConnection(ioLoop, connName, connSocket, localAddr, peerAddr));
