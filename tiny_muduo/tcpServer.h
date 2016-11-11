@@ -5,6 +5,7 @@
 #include <map>
 #include <string>
 #include <memory>
+#include "eventLoopThreadPoll.h"
 namespace cm {
 	class EventLoop;
 	class TcpServer : public NonCopyable {
@@ -18,10 +19,12 @@ namespace cm {
 		void setMessageCallback(const MessageCallback&cb) {
 			messageCallback_ = cb;
 		}
+		void setThreadNum(int num) {threadPoll_->setThreadNum(num);}
 	private:
 		using ConnectionMap = std::map<std::string, TcpConnetionPtr>;
 		void newConnection(const Socket& connSocket, const InetAddress& addr);
 		void removeConnection(const TcpConnetionPtr& cnn);
+		void removeConnectionInLoop(const TcpConnetionPtr& cnn);
 		EventLoop *loop_;
 		bool started_;
 		int nextConnId_;
@@ -30,5 +33,6 @@ namespace cm {
 		ConnectionCallback connectionCallback_;
 		MessageCallback messageCallback_;
 		ConnectionMap connections_;
+		std::unique_ptr<EventLoopThreadPoll> threadPoll_;
 	};
 }

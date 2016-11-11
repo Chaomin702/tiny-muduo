@@ -7,6 +7,7 @@
 #include <functional>
 #include <memory>
 #include <vector>
+
 namespace cm {
 	
 class ThreadPoll : private NonCopyable {

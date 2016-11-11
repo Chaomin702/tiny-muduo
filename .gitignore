@@ -7,5 +7,4 @@ Release
 *.npa
 *.npd
 VisualGDBCache
-/CodeDB
 CodeDB

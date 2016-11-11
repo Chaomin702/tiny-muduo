@@ -6,7 +6,6 @@ using namespace cm;
 
 
 cm::Socket::~Socket() {
-	log_info("Socket %d closed", socketfd_);
 	if (socketfd_ >= 0)
 		cm::sockets::close(socketfd_);
 }

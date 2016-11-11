@@ -20,7 +20,9 @@ void configure(cm::Acceptor *acceptor) {
 }
 void onConnection(const cm::TcpConnetionPtr& conn) {
 	if (conn->connected()) {
-		std::cout << "new connection " << conn->name() << " from " << conn->peerAddress().toHostPort() << std::endl;
+		std::cout << "new connection " << conn->name() << 
+			" from " << conn->peerAddress().toHostPort() 
+		<< " thread id=" << cm::CurrentThread::tid() << std::endl;
 		conn->send(message1);
 		conn->send(message2);
 	}else{
@@ -34,7 +36,7 @@ void onMessage(const cm::TcpConnetionPtr& conn, cm::Buffer *buf, cm::TimeStamp r
 }
 int main(int argc, char *argv[]){
 	std::cout << "pid: " << getpid() << " tid: " << cm::CurrentThread::tid() << "\n";
-	int len = 1000000;
+	int len = 10;
 	message1.resize(len);
 	message2.resize(len);
 	std::fill(message1.begin(), message1.end(), 'A');
@@ -44,6 +46,7 @@ int main(int argc, char *argv[]){
 	cm::TcpServer server(&loop, listenAddr);
 	server.setConnectionCallback(onConnection);
 	server.setMessageCallback(onMessage);
+	server.setThreadNum(2);
 	server.start();
 	loop.loop();
 	return 0;
