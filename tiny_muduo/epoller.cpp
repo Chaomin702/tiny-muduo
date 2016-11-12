@@ -38,7 +38,7 @@ TimeStamp Epoller::poll(int timeoutMs, ChannelList* activaChannelList) {
 	if (numEvents > 0) {
 		fillUpdateChannels(numEvents, activaChannelList);
 	}else if (numEvents == 0) {
-		log_info("epoller: nothing happended");
+		;
 	}else{
 		log_err("epoller: wait error");
 	}
@@ -86,7 +86,6 @@ void Epoller::updateChannel(Channel *channel) {
 void cm::Epoller::removeChannel(Channel *channel) {
 	ownerLoop_->assertInLoopThread();
 	int fd = channel->fd();
-	log_info("fd = %d", fd);
 	assert(channels_.find(fd) != channels_.end());
 	assert(channels_[fd] == channel);
 	assert(channel->isNoneEvent());

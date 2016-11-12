@@ -104,6 +104,9 @@
     <ClInclude Include="eventLoopThreadPoll.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="any.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="thread.cpp">

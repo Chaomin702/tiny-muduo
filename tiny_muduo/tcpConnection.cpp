@@ -75,7 +75,6 @@ void cm::TcpConnection::handleWrite() {
 
 void cm::TcpConnection::handleClose() {
 	loop_->assertInLoopThread();
-	log_info("TCP connection close handle");
 	assert(state_ == kConnected || state_ == TcpConnection::kDisconnecting);
 	channel_->disableAll();
 	closeCallback_(shared_from_this());

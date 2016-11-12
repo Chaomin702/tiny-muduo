@@ -37,12 +37,12 @@ void onMessage(const cm::TcpConnetionPtr& conn, cm::Buffer *buf, cm::TimeStamp r
 }
 int main(int argc, char *argv[]){
 	std::cout << "pid: " << getpid() << " tid: " << cm::CurrentThread::tid() << "\n";
-	int len = 10;
+	int len = 100;
 	message1.resize(len);
 	message2.resize(len);
 	std::fill(message1.begin(), message1.end(), 'A');
 	std::fill(message2.begin(), message2.end(), 'B');
-	cm::InetAddress listenAddr(3000);
+	cm::InetAddress listenAddr(80);
 	cm::EventLoop loop;
 	cm::TcpServer server(&loop, listenAddr);
 	server.setConnectionCallback(onConnection);

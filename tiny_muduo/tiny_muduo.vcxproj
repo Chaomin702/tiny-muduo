@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="acceptor.h" />
+    <ClInclude Include="any.h" />
     <ClInclude Include="buffer.h" />
     <ClInclude Include="callback.h" />
     <ClInclude Include="channel.h" />

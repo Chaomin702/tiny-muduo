@@ -4,8 +4,6 @@ Release
 *.sdf
 *.suo
 *.old
-*.npa
-*.npd
 VisualGDBCache
 CodeDB
 /tiny_muduo/Debug
