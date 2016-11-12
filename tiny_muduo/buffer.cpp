@@ -5,7 +5,7 @@
 #include <sys/uio.h>
 using namespace cm;
 
-
+const char Buffer::kCRLF[] = "\r\n";
 
 ssize_t cm::Buffer::readFd(int fd, int*savedErrno) {
 	char extrabuf[65536];

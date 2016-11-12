@@ -57,7 +57,7 @@ namespace cm {
 		return const_cast<ValueType*>(anyCast<ValueType>(static_cast<const Any*>(any)));
 	}
 	template<typename ValueType>
-	const ValueType anyCast(const Any& any) {
+	ValueType anyCast(const Any& any) {
 		auto *t = anyCast<ValueType>(&any);
 		if (!t)
 			throw std::runtime_error("Any type incorrect!");

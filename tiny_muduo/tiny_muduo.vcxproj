@@ -81,6 +81,10 @@
     <ClInclude Include="eventLoop.h" />
     <ClInclude Include="eventLoopThread.h" />
     <ClInclude Include="eventLoopThreadPoll.h" />
+    <ClInclude Include="httpContext.h" />
+    <ClInclude Include="httpRequest.h" />
+    <ClInclude Include="httpResponse.h" />
+    <ClInclude Include="httpServer.h" />
     <ClInclude Include="inetAddress.h" />
     <ClInclude Include="mutexLock.h" />
     <ClInclude Include="nonCopyable.h" />
@@ -102,6 +106,8 @@
     <ClCompile Include="eventLoop.cpp" />
     <ClCompile Include="eventLoopThread.cpp" />
     <ClCompile Include="eventLoopThreadPoll.cpp" />
+    <ClCompile Include="httpResponse.cpp" />
+    <ClCompile Include="httpServer.cpp" />
     <ClCompile Include="inetAddress.cpp" />
     <ClCompile Include="socket.cpp" />
     <ClCompile Include="socketOps.cpp" />

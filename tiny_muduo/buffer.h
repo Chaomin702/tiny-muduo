@@ -45,22 +45,33 @@ namespace cm
 			retrieveAll();
 			return str;
 		}
-		void append(const std::string& str) {
-			append(str.data(), str.length());
+		Buffer& append(const std::string& str) {
+			return append(str.data(), str.length());
 		}
-		void append(const char* data, size_t len) {
+		Buffer& append(const char* data, size_t len) {
 			ensureWritableBytes(len);
 			std::copy(data, data + len, beginWrite());
 			hasWritten(len);
+			return *this;
 		}
-		void append(const void* data, size_t len) {
-			append(static_cast<const char*>(data), len);
+		Buffer& append(const void* data, size_t len) {
+			return append(static_cast<const char*>(data), len);
 		}
 		void ensureWritableBytes(size_t len) {
 			if (writableBytes() < len) {
 				makeSpace(len);
 			}
 			assert(writableBytes() >= len);
+		}
+		const char* findCRLF()const {
+			const char* p = std::search(peek(), beginWrite(), kCRLF, kCRLF + 2);
+			return p == beginWrite() ? NULL : p;
+		}
+		const char* findCRLF(const char* start)const {
+			assert(peek() <= start);
+			assert(start <= beginWrite());
+			const char* p = std::search(start, beginWrite(), kCRLF, kCRLF + 2);
+			return p == beginWrite() ? NULL : p;
 		}
 		char* beginWrite() {return begin() + writerIndex_;}
 		const char* beginWrite()const {return begin() + writerIndex_;}
@@ -73,6 +84,7 @@ namespace cm
 		}
 		ssize_t readFd(int fd, int*savedErrno);
 	private:
+		static const char kCRLF[];
 		char* begin() {return & *buffer_.begin();}
 		const char* begin()const {return & *buffer_.begin();}
 		void  makeSpace(size_t len) {

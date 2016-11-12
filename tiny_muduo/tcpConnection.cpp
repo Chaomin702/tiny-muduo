@@ -87,12 +87,15 @@ void cm::TcpConnection::handleError() {
 
 
 void cm::TcpConnection::sendInLoop(const std::string& message) {
+	sendInLoop(message.data(), message.size());
+}
+void cm::TcpConnection::sendInLoop(const void* data, size_t len) {
 	loop_->assertInLoopThread();
 	ssize_t nwrote = 0;
 	if (!channel_->isWriting() && outputBuffer_.readableBytes() == 0) {
-		nwrote =::write(socket_->fd(), message.data(), message.size());
+		nwrote =:: write(socket_->fd(), data, len);
 		if (nwrote > 0) {
-			if (nwrote < message.size())
+			if (nwrote < len)
 				log_info("I am going to write more data");
 		}else{
 			nwrote = 0;
@@ -101,14 +104,13 @@ void cm::TcpConnection::sendInLoop(const std::string& message) {
 		}
 	}
 	assert(nwrote >= 0);
-	if (nwrote < message.size()) {
-		outputBuffer_.append(message.data() + nwrote, message.size() - nwrote);
+	if (nwrote < len) {
+		outputBuffer_.append(static_cast<const char*>(data) + nwrote, len - nwrote);
 		if (!channel_->isWriting()) {
 			channel_->enableWriting();
 		}
 	}
 }
-
 
 void cm::TcpConnection::shutdownInLoop() {
 	loop_->assertInLoopThread();
@@ -130,7 +132,16 @@ void cm::TcpConnection::send(const std::string& message) {
 		if (loop_->isInLoopThread()) {
 			sendInLoop(message);
 		}else{
-			loop_->runInLoop(std::bind(&TcpConnection::sendInLoop, this, message));
+			loop_->runInLoop([this,&message]{return TcpConnection::sendInLoop(message);});
+		}
+	}
+}
+void cm::TcpConnection::send(const void* data, size_t len) {
+	if (state_ == TcpConnection::kConnected) {
+		if (loop_->isInLoopThread()) {
+			sendInLoop(data, len);
+		}else{
+			loop_->runInLoop([this, data, len] {return TcpConnection::sendInLoop(data, len);});
 		}
 	}
 }

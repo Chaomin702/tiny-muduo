@@ -42,7 +42,7 @@ int main(int argc, char *argv[]){
 	message2.resize(len);
 	std::fill(message1.begin(), message1.end(), 'A');
 	std::fill(message2.begin(), message2.end(), 'B');
-	cm::InetAddress listenAddr(80);
+	cm::InetAddress listenAddr(3000);
 	cm::EventLoop loop;
 	cm::TcpServer server(&loop, listenAddr);
 	server.setConnectionCallback(onConnection);

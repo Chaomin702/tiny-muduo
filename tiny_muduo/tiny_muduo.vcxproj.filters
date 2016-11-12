@@ -107,6 +107,18 @@
     <ClInclude Include="any.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="httpServer.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="httpRequest.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="httpContext.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="httpResponse.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="thread.cpp">
@@ -161,6 +173,12 @@
       <Filter>Source files</Filter>
     </ClCompile>
     <ClCompile Include="eventLoopThreadPoll.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="httpServer.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="httpResponse.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>

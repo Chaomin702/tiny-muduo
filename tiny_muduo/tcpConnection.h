@@ -33,6 +33,7 @@ namespace cm
 		void connectionEstablished();
 		void connectionDestroyed();
 		void send(const std::string& message);
+		void send(const void* data, size_t len);
 		void shutdown();
 		void setContext(const Any& context) {contest_ = context;}
 		Any& getContext() {return contest_;}
@@ -45,6 +46,7 @@ namespace cm
 		void handleClose();
 		void handleError();
 		void sendInLoop(const std::string& message);
+		void sendInLoop(const void* data, size_t len);
 		void shutdownInLoop();
 		EventLoop *loop_;
 		std::string name_;
