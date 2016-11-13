@@ -12,13 +12,12 @@ namespace cm {
 			k200OK = 200,
 			k301MovedPermanently = 301,
 			k400BadRequest = 400,
+			k403Forbidden = 403,
 			k404NotFound = 404,
 		};
 		HttpResponse(bool close)
 			: statusCode_(kUnknow)
-			, closeConnection_(close)
-			, bodyData_(nullptr)
-			, bodyLen_(0) {}
+			, closeConnection_(close) {}
 		void setStatusCode(HttpStatusCode code) {statusCode_ = code;}
 		void setStatusMessage(const string& message) {statusMessage_ = message;}
 		void setContentType(const string& contentType) {
@@ -29,15 +28,17 @@ namespace cm {
 		}
 		void appendToBuffer(Buffer* output)const;
 		void setCloseConnection(bool close) {closeConnection_ = close;}
+		void setBody(const string& body) {
+			body_ = body;
+		}
 		void setBody(const void* body, size_t len) {
-			bodyData_ = body; bodyLen_ = len;
+			body_.assign(static_cast<const char*>(body), len);
 		}
 	private:
 		HttpStatusCode statusCode_;
 		bool closeConnection_;
 		std::map<string, string> headers_;
 		string statusMessage_;
-		const void* bodyData_;
-		size_t bodyLen_;
+		string body_;
 	};
 }

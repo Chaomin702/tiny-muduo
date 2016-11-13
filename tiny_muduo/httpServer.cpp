@@ -2,6 +2,7 @@
 #include "httpContext.h"
 #include "tcpConnection.h"
 #include "dbg.h"
+#include "thread.h"
 using namespace cm;
 using namespace std::placeholders;
 const std::map<const std::string, const std::string> httpFileTypes = {
@@ -48,7 +49,8 @@ const std::string& getFileType(const std::string& type) {
 	else
 		return httpFileTypes.find("")->second;
 }
-void parseUri(std::string& path, std::string& filetype, std::string cgiargs) {
+void parseUri(HttpRequest& req) {
+	std::string path = req.getPath(), filetype, cgiargs;
 	auto mark = std::find(path.begin(), path.end(), '?');
 	if (mark != path.end()) {
 		cgiargs.assign(mark + 1, path.end());
@@ -57,6 +59,9 @@ void parseUri(std::string& path, std::string& filetype, std::string cgiargs) {
 	if (path.back() == '/')
 		path.append("index.html");
 	filetype = getFileType(path.substr(path.find_last_of('.')));
+	req.setPath(path);
+	req.setCgiargs(cgiargs);
+	req.setFileType(filetype);
 }
 
 bool parseRequest(Buffer* buf, HttpContext* context, TimeStamp receiveTime) {
@@ -89,13 +94,16 @@ bool parseRequest(Buffer* buf, HttpContext* context, TimeStamp receiveTime) {
 				hasMore = false;
 		}else if(context->expectBody()){
 			context->gotBody();
+		}else if(context->GotAll()){
+			hasMore = false;
 		}
 	}
 	return ok;
 }
 	
-HttpServer::HttpServer(EventLoop *loop, const InetAddress& listenAddr)
+HttpServer::HttpServer(EventLoop *loop, const InetAddress& listenAddr, int threadNum)
 	: server_(loop, listenAddr) {
+		server_.setThreadNum(threadNum);
 		server_.setConnectionCallback(std::bind(&HttpServer::onConnection, this, _1));
 		server_.setMessageCallback(std::bind(&HttpServer::doRequest, this, _1, _2, _3));
 	}
@@ -111,18 +119,24 @@ void HttpServer::doRequest(const TcpConnetionPtr& conn, Buffer* buf, TimeStamp r
 		conn->shutdown();
 	}
 	if (context->GotAll()) {
+		parseUri(context->request());
 		Response(conn, context->request());
 		context->reset();
 	}
 }
 void HttpServer::onConnection(const TcpConnetionPtr& conn) {
 	if (conn->connected()) {
-		conn->setContext(HttpContext());	
+		conn->setContext(HttpContext());
+		log_info("new request comming from %s, thread %s %d handle it",
+			conn->localAddrress().toHostPort().c_str(), conn->name().c_str(), CurrentThread::tid());
 	}
 }
 
 void cm::HttpServer::Response(const TcpConnetionPtr& conn, const HttpRequest& request) {
 	HttpResponse response(false);
 	httpCallback_(request, &response);
-	
+	Buffer buf;
+	response.appendToBuffer(&buf);
+	conn->send(&buf);
+	conn->shutdown();
 }

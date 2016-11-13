@@ -59,8 +59,6 @@ void cm::TcpServer::removeConnection(const TcpConnetionPtr& conn) {
 void cm::TcpServer::removeConnectionInLoop(const TcpConnetionPtr& conn) {
 	loop_->assertInLoopThread();
 //	log_info("TCP server remove connection in loop [%s]", conn->name().c_str());
-	for (auto &i : connections_)
-		std::cout << i.first << std::endl;
 	assert(connections_.find(conn->name()) != connections_.end());
 	connections_.erase(conn->name());
 	EventLoop *ioLoop = conn->getloop();

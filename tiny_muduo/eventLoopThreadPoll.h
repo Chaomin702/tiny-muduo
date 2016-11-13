@@ -2,6 +2,7 @@
 #include <vector>
 #include <memory>
 #include "nonCopyable.h"
+#include <assert.h>
 namespace cm 
 {
 	class EventLoop;
@@ -10,7 +11,10 @@ namespace cm
 	public:
 		EventLoopThreadPoll(EventLoop *baseloop);
 		~EventLoopThreadPoll();
-		void setThreadNum(int threadNum) {threadNum_ = threadNum;}
+		void setThreadNum(int threadNum) {
+			assert(!started_);
+			threadNum_ = threadNum;
+		}
 		void start();
 		EventLoop* getnextLoop();
 	private:

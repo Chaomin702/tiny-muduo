@@ -14,6 +14,7 @@ cm::TcpConnection::TcpConnection(EventLoop * loop, const std::string name, const
 	, localAddr_(localAddr)
 	, peerAddr_(peerAddr) {
 		channel_->setReadCallback(std::bind(&TcpConnection::handleRead, this, _1));
+		channel_->setWriteCallback(std::bind(&TcpConnection::handleWrite, this));
 }
 
 cm::TcpConnection::~TcpConnection() {
@@ -62,15 +63,16 @@ void cm::TcpConnection::handleWrite() {
 					shutdownInLoop();
 			}
 			else {
-				log_info("I am going to write more data");
+				//log_info("I am going to write more data");
 			}
 		}
 		else {
-			log_err("Tcp handle write error");
+			log_warn("Tcp handle write error");
 		}
 	}else{
 		log_info("connection is down, no more writing");
 	}
+	
 }
 
 void cm::TcpConnection::handleClose() {
@@ -121,7 +123,7 @@ void cm::TcpConnection::shutdownInLoop() {
 
 void cm::TcpConnection::shutdown() {
 	if (state_ == kConnected) {
-		state_ = kDisconnecting;
+		state_ = kDisconnecting;	//写事件结束后关闭
 		loop_->runInLoop(std::bind(&TcpConnection::shutdownInLoop, this)); //bind持有TcpConnection的this指针，但只有在close时指针才会失效吧。。
 	}
 }
@@ -142,6 +144,16 @@ void cm::TcpConnection::send(const void* data, size_t len) {
 			sendInLoop(data, len);
 		}else{
 			loop_->runInLoop([this, data, len] {return TcpConnection::sendInLoop(data, len);});
+		}
+	}
+}
+
+void cm::TcpConnection::send(Buffer *buf) {
+	if (state_ == TcpConnection::kConnected) {
+		if (loop_->isInLoopThread()) {
+			sendInLoop(buf->peek(), buf->readableBytes());
+		}else{
+			loop_->runInLoop([this,buf]{return TcpConnection::sendInLoop(buf->retrieveAsString());});
 		}
 	}
 }

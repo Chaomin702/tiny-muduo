@@ -8,46 +8,48 @@
 #include "acceptor.h"
 #include "tcpServer.h"
 #include "tcpConnection.h"
+#include "httpServer.h"
 
-std::string message1, message2;
-void newConnection(const cm::Socket& connSock, const cm::InetAddress& addr) {
-	std::cout << "new connection accepted from " << addr.toHostPort() << std::endl;
-	::write(connSock.fd(), "Hello~", 7);
-}
-void configure(cm::Acceptor *acceptor) {
-	acceptor->setNewConnectionCallback(newConnection);
-	acceptor->listen();
-}
-void onConnection(const cm::TcpConnetionPtr& conn) {
-	if (conn->connected()) {
-		std::cout << "new connection " << conn->name() << 
-			" from " << conn->peerAddress().toHostPort() 
-		<< " thread id=" << cm::CurrentThread::tid() << std::endl;
-		conn->send(message1);
-		conn->send(message2);
-		conn->shutdown();
+#include <sys/stat.h>
+#include <sys/mman.h>
+#include <fcntl.h>
+using namespace cm;
+const std::string homedir = "/home/ubuntu/webserver/servfiles";
+void onResponse(const HttpRequest& req, HttpResponse* response) {
+	auto headers = req.headers();
+	if (req.getMethod() == HttpRequest::kGet) {
+		struct stat sbuf;
+		const std::string path = homedir + req.getPath();
+		if (stat(path.c_str(), &sbuf) == 0) {
+			if ((S_ISREG(sbuf.st_mode)) && (S_IRUSR & sbuf.st_mode)) {
+				int srcfd = open(path.c_str(), O_RDONLY, 0);
+				char* scrp = (char*)mmap(0, sbuf.st_size, PROT_READ, MAP_PRIVATE, srcfd, 0);
+				close(srcfd);
+				response->setBody(scrp, sbuf.st_size);
+				munmap(scrp, sbuf.st_size);
+				response->setStatusCode(HttpResponse::k200OK);
+				response->setStatusMessage("OK");
+				response->setContentType(req.getFileType());
+			}else {
+				response->setStatusCode(HttpResponse::k403Forbidden);
+				response->setStatusMessage("Forbidden");  
+			}
+		}else {
+			response->setStatusCode(HttpResponse::k404NotFound);
+			response->setStatusMessage("Not found");
+		}
 	}else{
-		std::cout << "connection " << conn->name() << " from " << conn->peerAddress().toHostPort()<< " is close" << std::endl;
+		response->setStatusCode(HttpResponse::k404NotFound);
+		response->setStatusMessage("Not found");
 	}
 }
-void onMessage(const cm::TcpConnetionPtr& conn, cm::Buffer *buf, cm::TimeStamp receiveTime ) {
-	std::cout << "onMessage(): received " << buf->readableBytes() 
-		<< "bytes from connection" << conn->name().c_str() 
-		<< " at " << receiveTime.toFormattedString().c_str() << std::endl;
-}
+
 int main(int argc, char *argv[]){
-	std::cout << "pid: " << getpid() << " tid: " << cm::CurrentThread::tid() << "\n";
-	int len = 100;
-	message1.resize(len);
-	message2.resize(len);
-	std::fill(message1.begin(), message1.end(), 'A');
-	std::fill(message2.begin(), message2.end(), 'B');
-	cm::InetAddress listenAddr(3000);
-	cm::EventLoop loop;
-	cm::TcpServer server(&loop, listenAddr);
-	server.setConnectionCallback(onConnection);
-	server.setMessageCallback(onMessage);
-	server.setThreadNum(5);
+	std::cout << "pid: " << getpid() << " tid: " << CurrentThread::tid() << "\n";
+	InetAddress listenAddr(80);
+	EventLoop loop;
+	HttpServer server(&loop, listenAddr, 10);
+	server.setHttpCallback(onResponse);
 	server.start();
 	loop.loop();
 	return 0;

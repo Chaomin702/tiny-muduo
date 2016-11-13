@@ -29,7 +29,8 @@ namespace cm {
 		void setPath(const char*b,const char* e) {
 			path_.assign(b, e);
 		}
-		const string& getPath() {return path_;}
+		void setPath(const string& path) {path_ = path;}
+		const string& getPath()const {return path_;}
 		void setReceiveTime(TimeStamp time) {receiveTime_ = time;}
 		TimeStamp getReceiveTime()const {return receiveTime_;}
 		void addHeader(const char*b, const char*colon,  const char*e) {
@@ -49,6 +50,7 @@ namespace cm {
 				res = it->second;
 			return res;
 		}
+		const std::map<string, string>& headers()const {return headers_;};
 		void setFileType(const string& type) {
 			fileType_ = type;
 		}
@@ -65,6 +67,7 @@ namespace cm {
 			HttpRequest temp;
 			swap(temp);
 		}
+		
 	private:
 		Method method_;
 		string path_;

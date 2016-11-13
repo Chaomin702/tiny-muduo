@@ -34,6 +34,7 @@ namespace cm
 		void connectionDestroyed();
 		void send(const std::string& message);
 		void send(const void* data, size_t len);
+		void send(Buffer *buf);
 		void shutdown();
 		void setContext(const Any& context) {contest_ = context;}
 		Any& getContext() {return contest_;}

@@ -12,7 +12,7 @@ namespace cm {
 	class HttpServer :public NonCopyable {
 	public:
 		using HttpCallback = std::function<void(const HttpRequest&, HttpResponse*)>;
-		HttpServer(EventLoop *loop, const InetAddress& listenAddr);
+		HttpServer(EventLoop *loop, const InetAddress& listenAddr, int threadNum);
 		void start();
 		void setHomeDir(const std::string& dir) {homeDir_ = dir;}
 		void setHttpCallback(const HttpCallback& cb) {httpCallback_ = cb;}
