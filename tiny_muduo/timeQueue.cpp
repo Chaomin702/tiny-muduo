@@ -26,7 +26,7 @@ namespace cm {
 		void readTimerfd(int timerfd, TimeStamp now) {
 			uint64_t howmany;
 			ssize_t n = ::read(timerfd, &howmany, sizeof howmany);
-			log_info("TimerQueue readtimerfd %ld at %s", howmany, now.toString().c_str());
+			//log_info("TimerQueue readtimerfd %ld at %s", howmany, now.toString().c_str());
 			if (n != sizeof howmany) {
 				log_err("readTimerfd read error");
 			}

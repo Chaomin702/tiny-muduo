@@ -102,7 +102,7 @@ void cm::TcpConnection::sendInLoop(const void* data, size_t len) {
 		}else{
 			nwrote = 0;
 			if (errno != EWOULDBLOCK)
-				log_err("TCP connection sendInloop error");
+				log_warn("TCP connection sendInloop error");
 		}
 	}
 	assert(nwrote >= 0);

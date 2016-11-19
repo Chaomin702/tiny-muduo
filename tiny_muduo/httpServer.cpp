@@ -1,6 +1,7 @@
 #include "httpServer.h"
 #include "httpContext.h"
 #include "tcpConnection.h"
+#include "eventLoop.h"
 #include "dbg.h"
 #include "thread.h"
 using namespace cm;
@@ -49,7 +50,7 @@ const std::string& getFileType(const std::string& type) {
 	else
 		return httpFileTypes.find("")->second;
 }
-void parseUri(HttpRequest& req) {
+bool parseUri(HttpRequest& req) {
 	std::string path = req.getPath(), filetype, cgiargs;
 	auto mark = std::find(path.begin(), path.end(), '?');
 	if (mark != path.end()) {
@@ -58,10 +59,14 @@ void parseUri(HttpRequest& req) {
 	}
 	if (path.back() == '/')
 		path.append("index.html");
-	filetype = getFileType(path.substr(path.find_last_of('.')));
+	size_t dot = path.find_last_of('.');
+	if (dot == std::string::npos)
+		return false;
+	filetype = getFileType(path.substr(dot));
 	req.setPath(path);
 	req.setCgiargs(cgiargs);
 	req.setFileType(filetype);
+	return true;
 }
 
 bool parseRequest(Buffer* buf, HttpContext* context, TimeStamp receiveTime) {
@@ -71,6 +76,7 @@ bool parseRequest(Buffer* buf, HttpContext* context, TimeStamp receiveTime) {
 		if (context->expectRequestLine()) {
 			const char* crlf = buf->findCRLF();
 			if (crlf) {
+				log_info("request line: %s", std::string().assign(buf->peek(),crlf).c_str());
 				ok = parseRequestLine(buf->peek(), crlf, context);
 				if (ok) {
 					context->request().setReceiveTime(receiveTime);
@@ -102,10 +108,12 @@ bool parseRequest(Buffer* buf, HttpContext* context, TimeStamp receiveTime) {
 }
 	
 HttpServer::HttpServer(EventLoop *loop, const InetAddress& listenAddr, int threadNum)
-	: server_(loop, listenAddr) {
+	: server_(loop, listenAddr)
+	, weakConnectionList_(8){
 		server_.setThreadNum(threadNum);
 		server_.setConnectionCallback(std::bind(&HttpServer::onConnection, this, _1));
 		server_.setMessageCallback(std::bind(&HttpServer::doRequest, this, _1, _2, _3));
+		loop->runEvery(1.0, std::bind(&HttpServer::onTimer, this));
 	}
 
 void cm::HttpServer::start() {
@@ -113,22 +121,45 @@ void cm::HttpServer::start() {
 	server_.start();
 }
 void HttpServer::doRequest(const TcpConnetionPtr& conn, Buffer* buf, TimeStamp receiveTime) {
+	WeakEntryPtr weakEntry(anyCast<WeakEntryPtr>(conn->getEntry()));
+	EntryPtr entry(weakEntry.lock());
+	if (entry) {
+		weakConnectionList_.back().insert(entry);	
+	}else{
+		log_info("you should be here!");
+	}
+	
 	HttpContext* context = anyCast<HttpContext>(&conn->getContext());
 	if (!parseRequest(buf, context, receiveTime)) {
 		conn->send("HTTP/1.1 400 Bad Request\r\n\r\n");
 		conn->shutdown();
+		context->reset();
 	}
 	if (context->GotAll()) {
-		parseUri(context->request());
-		Response(conn, context->request());
+		if (!parseUri(context->request())) {
+			conn->send("HTTP/1.1 400 invalid url\r\n\r\n");
+			conn->shutdown();
+		}
+		else {
+			Response(conn, context->request());
+		 }
 		context->reset();
 	}
 }
 void HttpServer::onConnection(const TcpConnetionPtr& conn) {
 	if (conn->connected()) {
 		conn->setContext(HttpContext());
-		log_info("new request comming from %s, thread %s %d handle it",
-			conn->localAddrress().toHostPort().c_str(), conn->name().c_str(), CurrentThread::tid());
+		log_info("new request comming from %s, %s thread  %d handle it at %s",
+			conn->peerAddress().toHostPort().c_str(), 
+			conn->name().c_str(), CurrentThread::tid(),
+			TimeStamp::now().toFormattedString().c_str());
+		//for timewheel
+		EntryPtr entry(new Entry(conn));
+		weakConnectionList_.back().insert(entry);
+		WeakEntryPtr weakEntry(entry);
+		conn->setEntry(weakEntry);
+	}else{
+		WeakEntryPtr weakEntry(anyCast<WeakEntryPtr>(conn->getEntry()));
 	}
 }
 
@@ -138,5 +169,10 @@ void cm::HttpServer::Response(const TcpConnetionPtr& conn, const HttpRequest& re
 	Buffer buf;
 	response.appendToBuffer(&buf);
 	conn->send(&buf);
-	conn->shutdown();
+//	conn->shutdown();
+}
+
+
+void cm::HttpServer::onTimer() {
+	weakConnectionList_.push_back(Bucket());
 }

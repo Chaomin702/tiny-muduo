@@ -75,6 +75,7 @@
     <ClInclude Include="buffer.h" />
     <ClInclude Include="callback.h" />
     <ClInclude Include="channel.h" />
+    <ClInclude Include="circularBuffer.h" />
     <ClInclude Include="condition.h" />
     <ClInclude Include="dbg.h" />
     <ClInclude Include="epoller.h" />
@@ -97,6 +98,7 @@
     <ClInclude Include="timer.h" />
     <ClInclude Include="timerQueue.h" />
     <ClInclude Include="timeStamp.h" />
+    <ClInclude Include="timeWheel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="acceptor.cpp" />

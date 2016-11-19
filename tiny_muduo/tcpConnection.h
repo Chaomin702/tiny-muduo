@@ -39,6 +39,10 @@ namespace cm
 		void setContext(const Any& context) {contest_ = context;}
 		Any& getContext() {return contest_;}
 		const Any& getContext()const {return contest_;}
+		void setEntry(const Any& entry) {entry_ = entry;}
+		Any& getEntry() {return entry_;}
+		const Any& getEntry()const {return entry_;}
+		void activeClose() {handleClose();}
 	private:
 		enum StateE { kConnecting, kConnected, kDisconnecting ,kDisconnected,};
 		void setState(StateE s) {state_ = s;}
@@ -62,6 +66,7 @@ namespace cm
 		Buffer inputBuffer_;
 		Buffer outputBuffer_;
 		Any contest_;
+		Any entry_;
 	};
 	using TcpConnetionPtr = std::shared_ptr<TcpConnection>;
 }

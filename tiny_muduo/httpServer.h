@@ -7,6 +7,7 @@
 #include "inetAddress.h"
 #include "httpRequest.h"
 #include "httpResponse.h"
+#include "timeWheel.h"
 namespace cm {
 	class EventLoop;
 	class HttpServer :public NonCopyable {
@@ -20,8 +21,10 @@ namespace cm {
 		void doRequest(const TcpConnetionPtr& conn, Buffer* buf, TimeStamp receiveTime);
 		void onConnection(const TcpConnetionPtr& conn);
 		void Response(const TcpConnetionPtr& conn, const HttpRequest& request);
+		void onTimer();
 		TcpServer server_;
 		std::string homeDir_;
 		HttpCallback httpCallback_;
+		WeakConnectionList weakConnectionList_;
 	};
 }

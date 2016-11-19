@@ -119,6 +119,12 @@
     <ClInclude Include="httpResponse.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="timeWheel.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="circularBuffer.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="thread.cpp">

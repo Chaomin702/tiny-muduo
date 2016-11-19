@@ -17,6 +17,10 @@ using namespace cm;
 const std::string homedir = "/home/ubuntu/webserver/servfiles";
 void onResponse(const HttpRequest& req, HttpResponse* response) {
 	auto headers = req.headers();
+	for (auto&i : headers) {
+		std::cout << i.first << ": " << i.second << "\n";
+	}
+	std::cout << std::endl;
 	if (req.getMethod() == HttpRequest::kGet) {
 		struct stat sbuf;
 		const std::string path = homedir + req.getPath();
