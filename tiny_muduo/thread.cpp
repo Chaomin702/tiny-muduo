@@ -4,6 +4,7 @@
 #include "unistd.h"
 #include <assert.h>
 #include <iostream>
+#include <pthread.h>
 namespace cm 
 {
 namespace CurrentThread {
@@ -41,7 +42,7 @@ void Thread::setCallback(const ThreadFunc & callback){
 void Thread::start(){
 	assert(!isStarted_);
 	isStarted_ = true;
-	pthread_create(&pthreadId_, NULL, threadFunc, this); // why not replace threadFunc with callback_? because of static callback?
+	pthread_create(&pthreadId_, NULL, threadFunc, this); 
 }
 
 void Thread::join(){

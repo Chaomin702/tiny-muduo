@@ -169,7 +169,7 @@ void cm::HttpServer::Response(const TcpConnetionPtr& conn, const HttpRequest& re
 	Buffer buf;
 	response.appendToBuffer(&buf);
 	conn->send(&buf);
-//	conn->shutdown();
+	conn->shutdown();
 }
 
 

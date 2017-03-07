@@ -44,6 +44,7 @@
   <Build xsi:type="com.visualgdb.build.make">
     <MakeFilePathRelativeToSourceDir>Makefile</MakeFilePathRelativeToSourceDir>
     <MakeConfigurationName>Release</MakeConfigurationName>
+    <AdditionalMakeArguments />
     <Toolchain>
       <Name>Default GCC toolchain on 119.29.35.60</Name>
       <UniqueID>com.sysprogs.toolchain.default-gcc</UniqueID>
@@ -77,6 +78,11 @@
     </Toolchain>
     <MakeCommandTemplate>
       <SkipWhenRunningCommandList>false</SkipWhenRunningCommandList>
+      <RemoteHost>
+        <HostName>10.170.49.189</HostName>
+        <Transport>SSH</Transport>
+        <UserName>chaomin</UserName>
+      </RemoteHost>
       <Command>make</Command>
       <WorkingDirectory>$(BuildDir)</WorkingDirectory>
       <Environment>
@@ -159,6 +165,7 @@
     <ShowMessageAfterExecuting>true</ShowMessageAfterExecuting>
   </CustomShortcuts>
   <UserDefinedVariables />
+  <ImportedPropertySheets />
   <CodeSense>
     <Enabled>Unknown</Enabled>
     <ExtraSettings>

@@ -50,9 +50,9 @@ void onResponse(const HttpRequest& req, HttpResponse* response) {
 
 int main(int argc, char *argv[]){
 	std::cout << "pid: " << getpid() << " tid: " << CurrentThread::tid() << "\n";
-	InetAddress listenAddr(80);
+	InetAddress listenAddr(3000);
 	EventLoop loop;
-	HttpServer server(&loop, listenAddr, 10);
+	HttpServer server(&loop, listenAddr, 1);
 	server.setHttpCallback(onResponse);
 	server.start();
 	loop.loop();

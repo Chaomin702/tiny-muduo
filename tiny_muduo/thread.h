@@ -16,7 +16,7 @@ public:
 	void start();
 	void join();
 private:
-	static void* threadFunc(void *);	//why static? because of do not need this pointer?
+	static void* threadFunc(void *);	//why static? for updating tid_
 	void runInThread();
 	pthread_t pthreadId_;
 	pid_t tid_;
